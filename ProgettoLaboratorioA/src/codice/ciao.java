@@ -9,7 +9,7 @@ public class ciao {
 		for(int i = 0;i<10;i++) {
 			System.out.println("Ciaoooo");
 		}
-		
+		System.out.println("DIO CAN");
 	}
 
 }
