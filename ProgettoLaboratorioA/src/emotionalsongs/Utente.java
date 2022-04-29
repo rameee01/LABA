@@ -38,7 +38,7 @@ public class Utente {
 	}
 	public void Registrazione() {
 		Scanner sc = new Scanner(System.in);
-		creazioneFileUtente();
+		//creazioneFileUtente();
 		System.out.println("Nome:"); this.nome = sc.next();
 		System.out.println("Cognome:"); this.cognome = sc.next();
 		System.out.println("Codice fiscale:"); this.codFisc = sc.next();
@@ -47,9 +47,13 @@ public class Utente {
 		System.out.println("Username:"); this.username = sc.next();
 		System.out.println("Password:"); this.passwd = sc.next();
 		try {
-			FileWriter fw = new FileWriter("UtentiRegistrati.txt");
-			fw.write(nome+" "+cognome+" "+codFisc+" "+ind+" "+mail+" "+username+" "+passwd);
-			fw.close();
+			FileWriter fw = new FileWriter("UtentiRegistrati.csv", true);
+			BufferedWriter bw = new BufferedWriter(fw);
+			PrintWriter pw = new PrintWriter(bw);
+			pw.println(nome+","+cognome+","+codFisc+","+ind+","+mail+","+username+","+passwd);
+			pw.flush();
+			pw.close();
+			
 		}catch(IOException e) {
 			System.out.println("Errore di scrittura");
 			e.printStackTrace();
