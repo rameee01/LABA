@@ -53,7 +53,7 @@ public class Utente {
 			pw.println(nome+","+cognome+","+codFisc+","+ind+","+mail+","+username+","+passwd);
 			pw.flush();
 			pw.close();
-			
+			//CIAO COME VA
 		}catch(IOException e) {
 			System.out.println("Errore di scrittura");
 			e.printStackTrace();
