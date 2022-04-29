@@ -42,6 +42,7 @@ public class Utente {
 		}catch(IOException e) {
 			System.out.println("Errore di scrittura");
 			e.printStackTrace();
+			
 		}
 		
 		
