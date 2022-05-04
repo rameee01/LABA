@@ -66,7 +66,7 @@ public class Utente {
 		//lettura di username e password dell'utente
 		System.out.print("Username: "); user = sc.next();
 		System.out.print("Password: "); passwd = sc.next();
-		
+//N I C E
 		try {//try catch per l'apertura del file
 			
 			FileReader fr = new FileReader(new File("UtentiRegistrati.csv"));
