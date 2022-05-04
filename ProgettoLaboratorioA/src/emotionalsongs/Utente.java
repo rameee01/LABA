@@ -1,4 +1,4 @@
-package EmotionalSongs;
+package emotionalsongs;
 import java.io.*;
 import java.util.*;
 
@@ -14,7 +14,10 @@ public class Utente {
 	
 	public String[] loggedUser = {"",""};
 	
-	public Utente() {}
+	public Utente() {
+		PrintWriter pw = fileManager("session.txt", false);
+		pw.print("");
+	}
 	
 	public Utente(String nome, String cognome, String codFisc, String ind, String mail, String username, String passwd) {
 		this.nome = nome;
@@ -26,6 +29,50 @@ public class Utente {
 		this.passwd = passwd;
 	}
 	
+	
+	public PrintWriter fileManager(String file, boolean append) {
+		PrintWriter pw = null;
+		try {
+			FileWriter fw = new FileWriter(file, append);
+			BufferedWriter bw = new BufferedWriter(fw);
+			pw = new PrintWriter(bw);
+			
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		return pw;
+	}
+	
+	public void sessionManager(String[] loggeduser) {
+		
+		String file = "session.txt"; 
+		PrintWriter pw = fileManager(file, false);
+		pw.print(loggeduser[0]+"\n"+loggeduser[1]);
+		pw.close();
+	}
+	
+	public boolean checkMail(String mail) {
+		boolean check_at = false;
+		boolean check_dot = false;
+		String[] parti;
+		for(int i=0;i<mail.length();i++) {
+			if(mail.charAt(i)=='@'||check_at) {
+				check_at = true;
+			}
+		}
+		if(check_at) {
+			parti = mail.split("@");
+			for(int i=0;i<parti[1].length();i++) {
+				if(parti[1].charAt(i)=='.'||check_dot) {
+					check_dot = true;
+				}
+			}
+		}
+			
+		
+		
+		return check_at&&check_dot;
+	}
 	public void Registrazione() {
 		Scanner sc = new Scanner(System.in);
 		//creazioneFileUtente();
@@ -34,25 +81,22 @@ public class Utente {
 		System.out.print("Codice fiscale:"); this.codFisc = sc.next();
 		System.out.print("Indirizzo fisico:"); this.ind = sc.next();
 		System.out.print("Mail:"); this.mail = sc.next();
-		System.out.print("Username:"); this.username = sc.next();
-		System.out.print("Password:"); this.passwd = sc.next();
-		try {
-			FileWriter fw = new FileWriter("UtentiRegistrati.csv", true);
-			BufferedWriter bw = new BufferedWriter(fw);
-			PrintWriter pw = new PrintWriter(bw);
-			pw.println(nome+","+cognome+","+codFisc+","+ind+","+mail+","+username+","+passwd);
-			pw.flush();
-			pw.close();
-			sc.close();
-			//CIAO COME VA
-		}catch(IOException e) {
-			System.out.println("Errore di scrittura");
-			e.printStackTrace();
-			
+		while(!checkMail(mail)) {
+			System.out.print("Inserire una mail valida:");
+			this.mail = sc.next();
 		}
 		
+		System.out.print("Username:"); this.username = sc.next();
+		System.out.print("Password:"); this.passwd = sc.next();
 		
-		
+		String file = "UtentiRegistrati.csv";	
+		PrintWriter pw = fileManager(file, true);
+		pw.println(nome+","+cognome+","+codFisc+","+ind+","+mail+","+username+","+passwd);
+		pw.flush();
+		pw.close();
+		sc.close();
+			
+
 	}
 	
 	public void Login() {
@@ -83,6 +127,7 @@ public class Utente {
 			if(check) {
 				loggedUser[0] = user;
 				loggedUser[1] = passwd;
+				sessionManager(loggedUser);
 				System.out.println("Loggato correttamente");
 			}	
 			else {
@@ -96,9 +141,6 @@ public class Utente {
 		
 			e.printStackTrace();
 		}
-			
-			
-		
-		
+	
 	}
 }

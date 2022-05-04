@@ -1,16 +1,16 @@
-package EmotionalSongs;
-import java.io.IOException;
+package emotionalsongs;
+import java.io.*;
 import java.util.*;
 public class EmotionalSongs {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 		Utente u = new Utente();
-		
-		int c = 0;
+		System.out.println(System.in.available());
+		int c;
 		Scanner sc = new Scanner(System.in);
 		
-		do {
+		
 			String[] utente = u.loggedUser;
 			if(utente!=null&&!utente[0].equals("")&&utente[1].equals("")) {
 				System.out.println("Loggato come: "+utente[0]);
@@ -26,12 +26,10 @@ public class EmotionalSongs {
 				break;
 			}
 			System.out.println("CONTINUARE?\n1.SI\n2.NO");
-			c = sc.nextInt();
+			
 		
-		}while(c!=0);
-		
+	
 	}
 
 }
 
-//ciao -fede -- prova 2 3
