@@ -5,16 +5,17 @@ import java.util.*;
 
 // classe database
 public class Database {
-	public File songs;
-	public FileWriter fin; 
-	public BufferedWriter bfin;
-	public PrintWriter pbfin;
-	
+	public File songs;	
+	public PrintWriter in;
 	//costruttore della classe(creazione file)
 	Database(){
 		
 		try{
 			songs = new File("Canzoni.csv");
+			in = new PrintWriter(songs);
+			in.write("Canzone"+','+"Autore"+','+"Anno"+','+"Album"+','+"durata"+','+"genere"+'\n'+"\n");
+			in.flush();
+			in.close();
 		}
 		catch(Exception E){
 			
@@ -36,50 +37,47 @@ public class Database {
 		String genre = "";
 		
 		//Inserimento dati
-		//il While vincola l'admin a inserire le info sulla canzone
+		//il While vincola l'admin a inserire i parametri della canzone
 		//NB --> i parametri genere,durata e album non sono vincolati perchè da traccia non sono obbligatori
 		//l'if genera un messaggio di errore
 			
 			
-			System.out.println("Nome?");
 			do {
-				name = in.next();
-				if(name == null)
+				System.out.println("Nome?");
+				name = in.nextLine();
+				if(name == " ");
 					System.out.println("dato vuoto non valido");
-			}while(name == "");
+			}while(name != "");
 		
-			System.out.println("Autore?");
 			do {
-				writer = in.next();
-				if(writer == null)
+				System.out.println("Autore?");
+				writer = in.nextLine();
+				if(writer == " ")
 					System.out.println("dato vuoto non valido");
-			}while(writer == "");
+			}while(writer != " ");
 			
-			System.out.println("Anno di pubblicazione?");
 			do {
-				year = in.next();
+				System.out.println("Anno di pubblicazione?");
+				year = in.nextLine();
 				
-				if(year == null)
+				if(year == " ")
 					System.out.println("dato vuoto non valido");
 			
-			}while(year == null);
+			}while(year != " ");
 			
 			System.out.println("album?");
-				album = in.next();
+				album = in.nextLine();
 			
 			System.out.println("Durata?");
-				length = in.next();
+				length = in.nextLine();
 			
 			
 			System.out.println("genere?");
-				genre = in.next();
+				genre = in.nextLine();
 				
 					try {
-						FileWriter fw = new FileWriter("Canzoni"
-								+ ".csv", true);
-						BufferedWriter bw = new BufferedWriter(fw);
-						PrintWriter pw = new PrintWriter(bw);
-						pw.println(name+","+writer+","+year+","+album+","+length+","+genre);
+						PrintWriter pw = new PrintWriter("Canzoni.csv");
+						pw.write(name+','+writer+','+year+','+album+','+length+','+genre);
 						pw.flush();
 						pw.close();
 					
