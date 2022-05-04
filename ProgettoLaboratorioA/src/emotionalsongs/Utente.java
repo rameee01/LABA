@@ -1,6 +1,6 @@
-package emotionalsongs;
+package EmotionalSongs;
 import java.io.*;
-import java.util.Scanner;
+import java.util.*;
 
 public class Utente {
 	private String nome;
@@ -10,6 +10,9 @@ public class Utente {
 	private String mail;
 	private String username;
 	private String passwd;
+	
+	
+	public String[] loggedUser = {"",""};
 	
 	public Utente() {}
 	
@@ -22,30 +25,17 @@ public class Utente {
 		this.username = username;
 		this.passwd = passwd;
 	}
-	private static void creazioneFileUtente() {
-		try {
-			File fp = new File("UtentiRegistrati.txt");
-			if(fp.createNewFile()) {
-				System.out.println("File utenti creato.");
-			}
-			else {
-				System.out.println("File utenti esistente");
-			}
-		}catch(IOException e) {
-			System.out.println("Errore");
-			e.printStackTrace();
-		}
-	}
+	
 	public void Registrazione() {
 		Scanner sc = new Scanner(System.in);
 		//creazioneFileUtente();
-		System.out.println("Nome:"); this.nome = sc.next();
-		System.out.println("Cognome:"); this.cognome = sc.next();
-		System.out.println("Codice fiscale:"); this.codFisc = sc.next();
-		System.out.println("Indirizzo fisico:"); this.ind = sc.next();
-		System.out.println("Mail:"); this.mail = sc.next();
-		System.out.println("Username:"); this.username = sc.next();
-		System.out.println("Password:"); this.passwd = sc.next();
+		System.out.print("Nome:"); this.nome = sc.next();
+		System.out.print("Cognome:"); this.cognome = sc.next();
+		System.out.print("Codice fiscale:"); this.codFisc = sc.next();
+		System.out.print("Indirizzo fisico:"); this.ind = sc.next();
+		System.out.print("Mail:"); this.mail = sc.next();
+		System.out.print("Username:"); this.username = sc.next();
+		System.out.print("Password:"); this.passwd = sc.next();
 		try {
 			FileWriter fw = new FileWriter("UtentiRegistrati.csv", true);
 			BufferedWriter bw = new BufferedWriter(fw);
@@ -53,6 +43,7 @@ public class Utente {
 			pw.println(nome+","+cognome+","+codFisc+","+ind+","+mail+","+username+","+passwd);
 			pw.flush();
 			pw.close();
+			sc.close();
 			//CIAO COME VA
 		}catch(IOException e) {
 			System.out.println("Errore di scrittura");
@@ -64,7 +55,50 @@ public class Utente {
 		
 	}
 	
-	public static void Login() {
+	public void Login() {
+		String user;
+		String passwd;
+		
+		String r_user = "", r_pass = "";
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Username: "); user = sc.next();
+		System.out.print("Password: "); passwd = sc.next();
+		
+		try {
+			
+			FileReader fr = new FileReader(new File("UtentiRegistrati.csv"));
+			BufferedReader br = new BufferedReader(fr);
+			String line;
+			String[] users;
+			boolean check = false;
+			while((line = br.readLine())!= null&&!check) {
+				users = line.split(",");
+				r_user = users[5].toLowerCase();
+				r_pass = users[6].toLowerCase();
+				if(user.equals(r_user)&&passwd.equals(r_pass)) {
+					check = true;
+				}
+				
+			}
+			if(check) {
+				loggedUser[0] = user;
+				loggedUser[1] = passwd;
+				System.out.println("Loggato correttamente");
+			}	
+			else {
+				System.out.println("Username o password non corretti");
+				return;
+			}
+		} catch (FileNotFoundException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+		
+			e.printStackTrace();
+		}
+			
+			
+		
 		
 	}
 }
