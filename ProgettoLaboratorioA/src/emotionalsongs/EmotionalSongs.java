@@ -25,7 +25,7 @@ public class EmotionalSongs {
 				u.Login();
 				break;
 			}
-			System.out.println("CONTINUARE?\n1.SI\n2.NO");
+			//System.out.println("CONTINUARE?\n1.SI\n2.NO");
 			
 		
 	

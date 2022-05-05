@@ -79,7 +79,7 @@ public class Utente {
 		System.out.print("Nome:"); this.nome = sc.next();
 		System.out.print("Cognome:"); this.cognome = sc.next();
 		System.out.print("Codice fiscale:"); this.codFisc = sc.next();
-		System.out.print("Indirizzo fisico:"); this.ind = sc.next();
+		System.out.print("Indirizzo fisico:"); this.ind = sc.nextLine();
 		System.out.print("Mail:"); this.mail = sc.next();
 		while(!checkMail(mail)) {
 			System.out.print("Inserire una mail valida:");
