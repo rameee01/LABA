@@ -8,13 +8,21 @@ import emotionalsongs.FileManager;
 // classe database
 public class Database {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	public File songs;
 =======
+=======
+
+	
+	public File songs;
+
+>>>>>>> refs/heads/rame
 	FileManager fm = new FileManager();
-	public File songs;	
-	public PrintWriter in;
+
+
 	//costruttore della classe(creazione file)
+<<<<<<< HEAD
 	public Database(){
 >>>>>>> refs/heads/rame
 		
@@ -39,12 +47,41 @@ public class Database {
 		}
 =======
 		
+=======
+
+
+	public PrintWriter in;
+	
+	public Database(){}
+	private boolean filecreation() {
+		try{
+				this.songs = new File("Canzoni.csv");
+				System.out.println("File canzoni creato.");
+				in = new PrintWriter(this.songs);
+				in.write("Canzone"+','+"Autore"+','+"Anno"+','+"Album"+','+"durata"+','+"genere"+'\n'+"\n");
+				in.flush();
+				in.close();
+				return true;
+>>>>>>> refs/heads/rame
 			
+<<<<<<< HEAD
+>>>>>>> refs/heads/rame
+=======
+		}catch(Exception E){
+			
+			System.out.println("errore nella creazione del file \"Songs.csv\"");
+			return false;
+		}
+
 >>>>>>> refs/heads/rame
 	}
 	
+<<<<<<< HEAD
 	
 	public void Addsong() {
+=======
+	/*public void Addsong() {
+>>>>>>> refs/heads/rame
 		try {
 				if(songs.createNewFile() == true )
 				{
@@ -70,6 +107,7 @@ public class Database {
 			
 			
 <<<<<<< HEAD
+<<<<<<< HEAD
 			do {
 				System.out.println("Nome?");
 				name = in.nextLine();
@@ -84,6 +122,23 @@ public class Database {
 					System.out.println("dato vuoto non valido");
 			}while(writer.isBlank());
 =======
+=======
+
+			do {
+				System.out.println("Nome?");
+				name = in.nextLine();
+				if(name.isBlank())
+					System.out.println("dato vuoto non valido");
+			}while(name.isBlank());
+		
+			do {
+				System.out.println("Autore?");
+				writer = in.nextLine();
+				if(writer.isBlank())
+					System.out.println("dato vuoto non valido");
+			}while(writer.isBlank());
+
+>>>>>>> refs/heads/rame
 		do {
 			System.out.println("Nome?");
 			name = in.nextLine();
@@ -97,6 +152,10 @@ public class Database {
 			if(writer == " ")
 				System.out.println("dato vuoto non valido");
 		}while(writer != " ");
+<<<<<<< HEAD
+>>>>>>> refs/heads/rame
+=======
+
 >>>>>>> refs/heads/rame
 			
 		do{
@@ -119,6 +178,7 @@ public class Database {
 		genre = in.nextLine();
 				
 <<<<<<< HEAD
+<<<<<<< HEAD
 				if(year.isBlank())
 					System.out.println("dato vuoto non valido");
 			
@@ -140,17 +200,42 @@ public class Database {
 						pw.flush();
 						pw.close();
 =======
+=======
+
+				if(year.isBlank())
+					System.out.println("dato vuoto non valido");
+			
+			}while(year.isBlank());
+			
+			System.out.println("album?");
+				album = in.nextLine();
+			
+			System.out.println("Durata?");
+				length = in.nextLine();
+			
+			
+			System.out.println("genere?");
+				genre = in.nextLine();
+				
+				
+
+>>>>>>> refs/heads/rame
 		try {
 			PrintWriter pw = new PrintWriter("Canzoni.csv");
 			pw.write(name+','+writer+','+year+','+album+','+length+','+genre);
 			pw.flush();
 			pw.close();
+<<<<<<< HEAD
+>>>>>>> refs/heads/rame
+=======
+
 >>>>>>> refs/heads/rame
 					
 		}catch(IOException e) {
 			System.out.println("Errore di scrittura");
 			e.printStackTrace();
 					
+<<<<<<< HEAD
 <<<<<<< HEAD
 				}
 		
@@ -161,8 +246,19 @@ public class Database {
 			
 =======
 >>>>>>> refs/heads/rame
+=======
+
+				}
+		
+			
+			
+				
+				System.out.println("errore nella scrittura del file");
+			
+
+>>>>>>> refs/heads/rame
 		}
-	}
+	}*/
 	
 	public void letturaCanzoni() {
 		BufferedReader bw = fm.openToRead("Canzoni.csv");
