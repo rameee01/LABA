@@ -13,6 +13,6 @@ public class inserimento{
 		System.out.println("vuoi aggiungere una cnzone?[y/n]");
 		
 		
-		data.Addsong();
+		//data.Addsong();
 	}
 }

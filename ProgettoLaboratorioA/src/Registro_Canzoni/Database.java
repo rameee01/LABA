@@ -7,18 +7,46 @@ import emotionalsongs.FileManager;
 
 // classe database
 public class Database {
+
+	
+	public File songs;
+
 	FileManager fm = new FileManager();
-	public File songs;	
-	public PrintWriter in;
+
+
 	//costruttore della classe(creazione file)
-	public Database(){
-		
-		
+
+
+	public PrintWriter in;
+	
+	public Database(){}
+	private boolean filecreation() {
+		try{
+				this.songs = new File("Canzoni.csv");
+				System.out.println("File canzoni creato.");
+				in = new PrintWriter(this.songs);
+				in.write("Canzone"+','+"Autore"+','+"Anno"+','+"Album"+','+"durata"+','+"genere"+'\n'+"\n");
+				in.flush();
+				in.close();
+				return true;
 			
+		}catch(Exception E){
+			
+			System.out.println("errore nella creazione del file \"Songs.csv\"");
+			return false;
+		}
+
 	}
 	
-	
-	public static void Addsong(){
+	/*public void Addsong() {
+		try {
+				if(songs.createNewFile() == true )
+				{
+					this.filecreation();
+				}
+			}catch(IOException e){
+				System.out.println("errore");
+		}
 		//variabili necessarie per inserimento
 		Scanner in = new Scanner(System.in);
 		
@@ -35,6 +63,21 @@ public class Database {
 		//l'if genera un messaggio di errore
 			
 			
+
+			do {
+				System.out.println("Nome?");
+				name = in.nextLine();
+				if(name.isBlank())
+					System.out.println("dato vuoto non valido");
+			}while(name.isBlank());
+		
+			do {
+				System.out.println("Autore?");
+				writer = in.nextLine();
+				if(writer.isBlank())
+					System.out.println("dato vuoto non valido");
+			}while(writer.isBlank());
+
 		do {
 			System.out.println("Nome?");
 			name = in.nextLine();
@@ -48,6 +91,7 @@ public class Database {
 			if(writer == " ")
 				System.out.println("dato vuoto non valido");
 		}while(writer != " ");
+
 			
 		do{
 			System.out.println("Anno di pubblicazione?");
@@ -68,18 +112,46 @@ public class Database {
 		System.out.println("genere?");
 		genre = in.nextLine();
 				
+
+				if(year.isBlank())
+					System.out.println("dato vuoto non valido");
+			
+			}while(year.isBlank());
+			
+			System.out.println("album?");
+				album = in.nextLine();
+			
+			System.out.println("Durata?");
+				length = in.nextLine();
+			
+			
+			System.out.println("genere?");
+				genre = in.nextLine();
+				
+				
+
 		try {
 			PrintWriter pw = new PrintWriter("Canzoni.csv");
 			pw.write(name+','+writer+','+year+','+album+','+length+','+genre);
 			pw.flush();
 			pw.close();
+
 					
 		}catch(IOException e) {
 			System.out.println("Errore di scrittura");
 			e.printStackTrace();
 					
+
+				}
+		
+			
+			
+				
+				System.out.println("errore nella scrittura del file");
+			
+
 		}
-	}
+	}*/
 	
 	public void letturaCanzoni() {
 		BufferedReader bw = fm.openToRead("Canzoni.csv");
