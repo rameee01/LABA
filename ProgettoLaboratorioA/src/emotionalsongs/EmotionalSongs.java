@@ -1,37 +1,35 @@
-package EmotionalSongs;
-import java.io.IOException;
+package emotionalsongs;
+import java.io.*;
 import java.util.*;
 public class EmotionalSongs {
 	
-	public static void main(String[] args) { //main del progetto
+	public static void main(String[] args) throws IOException {
 		
 		Utente u = new Utente();
-		
-		int c = 0;
+		System.out.println(System.in.available());
+		int c;
 		Scanner sc = new Scanner(System.in);
 		
-		do { //Ciclo do while per lo switch (da rivedere)
-			String[] utente = u.loggedUser; //prende le informazioni dell'utente loggato
-			if(utente!=null&&!utente[0].equals("")&&!utente[1].equals("")) { //se la stringa non è vuota significa che qualcuno è loggato
-				System.out.println("Loggato come: "+utente[0]); //e nel caso stampa il nome dell'utente
+		
+			String[] utente = u.loggedUser;
+			if(utente!=null&&!utente[0].equals("")&&utente[1].equals("")) {
+				System.out.println("Loggato come: "+utente[0]);
 			}
 			System.out.println("Cosa vuoi fare?\n1.Registrarti\n2.Login");
 			int scelta = sc.nextInt();
 			switch(scelta) {
 			case 1:
-				u.Registrazione(); //scelta di registrazione 
+				u.Registrazione();
 				break;
 			case 2:
-				u.Login(); //scelta di login
+				u.Login();
 				break;
 			}
-			System.out.println("CONTINUARE?\n1.SI\n2.NO");
-			c = sc.nextInt();
+			//System.out.println("CONTINUARE?\n1.SI\n2.NO");
+			
 		
-		}while(c!=0);
-		
+	
 	}
 
 }
 
-//ciao -fede -- prova 2 3
