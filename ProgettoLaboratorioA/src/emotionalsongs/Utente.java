@@ -1,6 +1,6 @@
 package emotionalsongs;
 import java.io.*;
-import java.util.Scanner;
+import java.util.*;
 
 public class Utente {
 	private String nome;
@@ -10,8 +10,14 @@ public class Utente {
 	private String mail;
 	private String username;
 	private String passwd;
+	private FileManager fm = new FileManager();
+	private String fileUtenti = "UtentiRegistrati.csv";
+	public String[] loggedUser = {"",""};
 	
-	public Utente() {}
+	public Utente() {
+		PrintWriter pw = fm.openToWrite("session.txt", false);
+		pw.print("");
+	}
 	
 	public Utente(String nome, String cognome, String codFisc, String ind, String mail, String username, String passwd) {
 		this.nome = nome;
@@ -22,48 +28,105 @@ public class Utente {
 		this.username = username;
 		this.passwd = passwd;
 	}
-	private static void creazioneFileUtente() {
-		try {
-			File fp = new File("UtentiRegistrati.txt");
-			if(fp.createNewFile()) {
-				System.out.println("File utenti creato.");
+	
+	
+	
+	public void sessionManager(String[] loggeduser) {
+		
+		String file = "session.txt"; 
+		PrintWriter pw = fm.openToWrite(file, false);
+		pw.print(loggeduser[0]+"\n"+loggeduser[1]);
+		pw.close();
+	}
+	
+	public boolean checkMail(String mail) {
+		boolean check_at = false;
+		boolean check_dot = false;
+		String[] parti;
+		for(int i=0;i<mail.length();i++) {
+			if(mail.charAt(i)=='@'||check_at) {
+				check_at = true;
 			}
-			else {
-				System.out.println("File utenti esistente");
-			}
-		}catch(IOException e) {
-			System.out.println("Errore");
-			e.printStackTrace();
 		}
+		if(check_at) {
+			parti = mail.split("@");
+			for(int i=0;i<parti[1].length();i++) {
+				if(parti[1].charAt(i)=='.'||check_dot) {
+					check_dot = true;
+				}
+			}
+		}
+
+		return check_at&&check_dot;
 	}
 	public void Registrazione() {
 		Scanner sc = new Scanner(System.in);
-		creazioneFileUtente();
-		System.out.println("Nome:"); this.nome = sc.next();
-		System.out.println("Cognome:"); this.cognome = sc.next();
-		System.out.println("Codice fiscale:"); this.codFisc = sc.next();
-		System.out.println("Indirizzo fisico:"); this.ind = sc.next();
-		System.out.println("Mail:"); this.mail = sc.next();
-		System.out.println("Username:"); this.username = sc.next();
-		System.out.println("Password:"); this.passwd = sc.next();
-		try {
-			FileWriter fw = new FileWriter("UtentiRegistrati.txt");
-			fw.write(nome+" "+cognome+" "+codFisc+" "+ind+" "+mail+" "+username+" "+passwd);
-			fw.close();
-		}catch(IOException e) {
-			System.out.println("Errore di scrittura");
-			e.printStackTrace();
-			
+		//creazioneFileUtente();
+		System.out.print("Nome:"); this.nome = sc.next();
+		System.out.print("Cognome:"); this.cognome = sc.next();
+		System.out.print("Codice fiscale:"); this.codFisc = sc.next();
+		System.out.print("Indirizzo fisico:"); this.ind = sc.nextLine();
+		System.out.print("Mail:"); this.mail = sc.next();
+		while(!checkMail(mail)) {
+			System.out.print("Inserire una mail valida:");
+			this.mail = sc.next();
 		}
 		
-		// we bella
-		// ciao - fede;
+		System.out.print("Username:"); this.username = sc.next();
+		System.out.print("Password:"); this.passwd = sc.next();
+		
+		String file = "UtentiRegistrati.csv";	
+		PrintWriter pw = fm.openToWrite(file, true);
+		pw.println(nome+","+cognome+","+codFisc+","+ind+","+mail+","+username+","+passwd);
+		pw.flush();
+		pw.close();
+		sc.close();
+			
 
-		
-		
 	}
 	
-	public static void Login() {
+	public void Login() {
+		String user;
+		String passwd;
 		
+		String r_user = "", r_pass = "";
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Username: "); user = sc.next();
+		System.out.print("Password: "); passwd = sc.next();
+		
+		try {
+			
+			BufferedReader br = fm.openToRead(fileUtenti);
+			String line;
+			String[] users;
+			boolean check = false;
+			while((line = br.readLine())!= null&&!check) {
+				//System.out.print(line);
+				users = line.split(",");
+				r_user = users[5].toLowerCase();
+				r_pass = users[6].toLowerCase();
+				if(user.equals(r_user)&&passwd.equals(r_pass)) {
+					check = true;
+				}
+				
+			}
+			if(check) {
+				loggedUser[0] = user;
+				loggedUser[1] = passwd;
+				sessionManager(loggedUser);
+				System.out.println("Loggato correttamente");
+			}	
+			else {
+				System.out.println("Username o password non corretti");
+				return;
+			}
+		} catch (FileNotFoundException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+		
+			e.printStackTrace();
+		}
+	
 	}
 }

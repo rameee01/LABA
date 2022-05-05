@@ -23,7 +23,7 @@ public class Utente {
 		try {
 			File fp = new File("/File/UtentiRegistrati.txt");
 			if(fp.createNewFile()) {
-				System.out.println("File utenti creato.");
+				System.out.println("File utenti creato con successo.");
 			}
 			else {
 				System.out.println("File utenti esistente");
