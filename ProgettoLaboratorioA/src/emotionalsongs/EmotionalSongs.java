@@ -1,6 +1,8 @@
 package emotionalsongs;
 import java.io.*;
 import java.util.*;
+
+import Registro_Canzoni.Database;
 public class EmotionalSongs {
 	
 	public static void main(String[] args) throws IOException {
@@ -24,6 +26,8 @@ public class EmotionalSongs {
 			case 2:
 				u.Login();
 				break;
+			case 3:
+				Database db = new Database();
 			}
 			//System.out.println("CONTINUARE?\n1.SI\n2.NO");
 			

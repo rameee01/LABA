@@ -10,12 +10,12 @@ public class Utente {
 	private String mail;
 	private String username;
 	private String passwd;
-	
-	
+	private FileManager fm = new FileManager();
+	private String fileUtenti = "UtentiRegistrati.csv";
 	public String[] loggedUser = {"",""};
 	
 	public Utente() {
-		PrintWriter pw = fileManager("session.txt", false);
+		PrintWriter pw = fm.openToWrite("session.txt", false);
 		pw.print("");
 	}
 	
@@ -30,23 +30,11 @@ public class Utente {
 	}
 	
 	
-	public PrintWriter fileManager(String file, boolean append) {
-		PrintWriter pw = null;
-		try {
-			FileWriter fw = new FileWriter(file, append);
-			BufferedWriter bw = new BufferedWriter(fw);
-			pw = new PrintWriter(bw);
-			
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-		return pw;
-	}
 	
 	public void sessionManager(String[] loggeduser) {
 		
 		String file = "session.txt"; 
-		PrintWriter pw = fileManager(file, false);
+		PrintWriter pw = fm.openToWrite(file, false);
 		pw.print(loggeduser[0]+"\n"+loggeduser[1]);
 		pw.close();
 	}
@@ -68,9 +56,7 @@ public class Utente {
 				}
 			}
 		}
-			
-		
-		
+
 		return check_at&&check_dot;
 	}
 	public void Registrazione() {
@@ -90,7 +76,7 @@ public class Utente {
 		System.out.print("Password:"); this.passwd = sc.next();
 		
 		String file = "UtentiRegistrati.csv";	
-		PrintWriter pw = fileManager(file, true);
+		PrintWriter pw = fm.openToWrite(file, true);
 		pw.println(nome+","+cognome+","+codFisc+","+ind+","+mail+","+username+","+passwd);
 		pw.flush();
 		pw.close();
@@ -110,12 +96,12 @@ public class Utente {
 		
 		try {
 			
-			FileReader fr = new FileReader(new File("UtentiRegistrati.csv"));
-			BufferedReader br = new BufferedReader(fr);
+			BufferedReader br = fm.openToRead(fileUtenti);
 			String line;
 			String[] users;
 			boolean check = false;
 			while((line = br.readLine())!= null&&!check) {
+				//System.out.print(line);
 				users = line.split(",");
 				r_user = users[5].toLowerCase();
 				r_pass = users[6].toLowerCase();
