@@ -5,27 +5,39 @@ import java.util.*;
 
 // classe database
 public class Database {
-	public File songs;	
-	public PrintWriter in;
-	//costruttore della classe(creazione file)
-	Database(){
+	
+	public File songs;
 		
+	public PrintWriter in;
+	
+	Database(){}
+	private boolean filecreation() {
 		try{
-			songs = new File("Canzoni.csv");
-			in = new PrintWriter(songs);
-			in.write("Canzone"+','+"Autore"+','+"Anno"+','+"Album"+','+"durata"+','+"genere"+'\n'+"\n");
-			in.flush();
-			in.close();
-		}
-		catch(Exception E){
+				this.songs = new File("Canzoni.csv");
+				System.out.println("File canzoni creato.");
+				in = new PrintWriter(this.songs);
+				in.write("Canzone"+','+"Autore"+','+"Anno"+','+"Album"+','+"durata"+','+"genere"+'\n'+"\n");
+				in.flush();
+				in.close();
+				return true;
+			
+		}catch(Exception E){
 			
 			System.out.println("errore nella creazione del file \"Songs.csv\"");
+			return false;
 		}
-			
 	}
 	
 	
-	public static void Addsong(){
+	public void Addsong() {
+		try {
+				if(songs.createNewFile() == true )
+				{
+					this.filecreation();
+				}
+			}catch(IOException e){
+				System.out.println("errore");
+		}
 		//variabili necessarie per inserimento
 		Scanner in = new Scanner(System.in);
 		
@@ -45,25 +57,25 @@ public class Database {
 			do {
 				System.out.println("Nome?");
 				name = in.nextLine();
-				if(name == " ");
+				if(name.isBlank())
 					System.out.println("dato vuoto non valido");
-			}while(name != "");
+			}while(name.isBlank());
 		
 			do {
 				System.out.println("Autore?");
 				writer = in.nextLine();
-				if(writer == " ")
+				if(writer.isBlank())
 					System.out.println("dato vuoto non valido");
-			}while(writer != " ");
+			}while(writer.isBlank());
 			
 			do {
 				System.out.println("Anno di pubblicazione?");
 				year = in.nextLine();
 				
-				if(year == " ")
+				if(year.isBlank())
 					System.out.println("dato vuoto non valido");
 			
-			}while(year != " ");
+			}while(year.isBlank());
 			
 			System.out.println("album?");
 				album = in.nextLine();
@@ -88,7 +100,10 @@ public class Database {
 				}
 		
 			
-		
+			
+				
+				System.out.println("errore nella scrittura del file");
+			
 		}
 	}
 
