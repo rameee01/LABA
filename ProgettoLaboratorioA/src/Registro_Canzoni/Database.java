@@ -13,17 +13,7 @@ public class Database {
 	//costruttore della classe(creazione file)
 	public Database(){
 		
-		try{
-			songs = new File("Canzoni.csv");
-			in = new PrintWriter(songs);
-			in.write("Canzone"+','+"Autore"+','+"Anno"+','+"Album"+','+"durata"+','+"genere"+'\n'+"\n");
-			in.flush();
-			in.close();
-		}
-		catch(Exception E){
-			
-			System.out.println("errore nella creazione del file \"Songs.csv\"");
-		}
+		
 			
 	}
 	
@@ -92,7 +82,42 @@ public class Database {
 	}
 	
 	public void letturaCanzoni() {
+		BufferedReader bw = fm.openToRead("Canzoni.csv");
+		String line;
+		try {
+			while((line = bw.readLine())!=null) {
+				System.out.println(line);
+			}
+			bw.close();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
 		
+	}
+	public void cercaBranoMusicale() {
+		System.out.println("Nome brano:");
+		Scanner sc = new Scanner(System.in);
+		boolean check = false;
+		String brano = sc.next();
+		brano.toLowerCase();
+		BufferedReader bw = fm.openToRead("Canzoni.csv");
+		try {
+			String line;
+			while((line = bw.readLine())!=null&&!check) {
+				String[] parti = line.split(",");
+				String r_brano = parti[0].toLowerCase();
+				if(brano.equals(r_brano)) {
+					check = true;
+				}
+			
+			}
+			if(check) {
+				System.out.println("Trovato");
+			}
+			bw.close();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
 
