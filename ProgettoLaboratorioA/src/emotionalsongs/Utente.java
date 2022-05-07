@@ -72,8 +72,17 @@ public class Utente {
 			this.mail = sc.next();
 		}
 		
+<<<<<<< HEAD
 		System.out.print("Username:"); this.username = sc.next();
 		System.out.print("Password:"); this.passwd = sc.next();
+=======
+<<<<<<< HEAD
+		// we bella
+		// ciao - fede;
+//esatto
+=======
+>>>>>>> refs/heads/rame
+>>>>>>> branch 'Fede' of https://github.com/rameee01/LABA.git
 		
 		String file = "UtentiRegistrati.csv";	
 		PrintWriter pw = fm.openToWrite(file, true);
